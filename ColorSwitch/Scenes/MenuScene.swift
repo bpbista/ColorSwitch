@@ -29,8 +29,8 @@ class MenuScene: SKScene {
         playLabel.position = CGPoint(x: frame.midX, y:frame.midY)
         playLabel.zPosition = ZPositions.label
         addChild(playLabel)
-        
-        let highScoreLabel = SKLabelNode(text: "High Score")
+        let highScore = UserDefaults.standard.integer(forKey: "HighScore")
+        let highScoreLabel = SKLabelNode(text: "HighScore: \(highScore)")
         highScoreLabel.fontName = "AvenirNext-Bold"
         highScoreLabel.fontSize = 40.0
         highScoreLabel.fontColor = UIColor.white
@@ -38,7 +38,7 @@ class MenuScene: SKScene {
         highScoreLabel.zPosition = ZPositions.label
         addChild(highScoreLabel)
         
-        let currentScoreLabel = SKLabelNode(text: "Recent Score")
+        let currentScoreLabel = SKLabelNode(text: "RecentScore \(UserDefaults.standard.integer(forKey: "RecentScore"))")
         currentScoreLabel.fontName = "AvenirNext-Bold"
         currentScoreLabel.fontSize = 40.0
         currentScoreLabel.fontColor = UIColor.white
