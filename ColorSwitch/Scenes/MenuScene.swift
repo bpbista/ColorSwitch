@@ -22,6 +22,7 @@ class MenuScene: SKScene {
             addChild(logo)
     }
     func addLabels(){
+        //create and add play label to menu scene
         let playLabel = SKLabelNode(text: "Tap to Play")
         playLabel.fontName = "AvenirNext-Bold"
         playLabel.fontSize = 50.0
@@ -29,6 +30,11 @@ class MenuScene: SKScene {
         playLabel.position = CGPoint(x: frame.midX, y:frame.midY)
         playLabel.zPosition = ZPositions.label
         addChild(playLabel)
+        
+        //animate play label
+        animateLabel(label: playLabel)
+        
+        //create and add high score label to menu scene
         let highScore = UserDefaults.standard.integer(forKey: "HighScore")
         let highScoreLabel = SKLabelNode(text: "HighScore: \(highScore)")
         highScoreLabel.fontName = "AvenirNext-Bold"
@@ -38,11 +44,12 @@ class MenuScene: SKScene {
         highScoreLabel.zPosition = ZPositions.label
         addChild(highScoreLabel)
         
-        let currentScoreLabel = SKLabelNode(text: "RecentScore \(UserDefaults.standard.integer(forKey: "RecentScore"))")
+        //create and add recent score label to menu scene
+        let currentScoreLabel = SKLabelNode(text: "RecentScore: \(UserDefaults.standard.integer(forKey: "RecentScore"))")
         currentScoreLabel.fontName = "AvenirNext-Bold"
         currentScoreLabel.fontSize = 40.0
         currentScoreLabel.fontColor = UIColor.white
-        currentScoreLabel.position = CGPoint(x: frame.midX, y:frame.midY - currentScoreLabel.frame.size.height*2)
+        currentScoreLabel.position = CGPoint(x: frame.midX, y:frame.midY - currentScoreLabel.frame.size.height*8)
         currentScoreLabel.zPosition = ZPositions.label
         addChild(currentScoreLabel)
 
@@ -50,5 +57,19 @@ class MenuScene: SKScene {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         let gameScene = GameScene(size: view!.bounds.size)
         view?.presentScene(gameScene)
+    }
+    
+    func animateLabel(label:SKLabelNode){
+//        let fadout = SKAction.fadeOut(withDuration: 1)
+//        let fadin = SKAction.fadeIn(withDuration: 1)
+        
+        let scaleUp = SKAction.scale(to: 1.1, duration: 0.8)
+        
+        let scaleDown = SKAction.scale(to: 1.0, duration: 0.8)
+        
+//        let sequence = SKAction.sequence([fadout,fadin])
+        let sequence = SKAction.sequence([scaleUp,scaleDown])
+
+        label.run(SKAction.repeatForever(sequence))
     }
 }

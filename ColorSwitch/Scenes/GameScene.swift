@@ -27,16 +27,6 @@ class GameScene: SKScene {
     
     func layoutScene(){
         backgroundColor = UIColor(red: 44/255, green: 62/255, blue: 80/255, alpha: 1.0)
-        colorSwitch = SKSpriteNode(imageNamed: "colorSwitch")
-        colorSwitch.size = CGSize(width: frame.size.width/3, height: frame.size.width/3)
-        colorSwitch.position = CGPoint(x: frame.midX, y: frame.minY + colorSwitch.size.height)
-        colorSwitch.zPosition = ZPositions.colorSwitch
-        //add phyics
-        colorSwitch.physicsBody = SKPhysicsBody(circleOfRadius: frame.size.width/2)
-        colorSwitch.physicsBody?.categoryBitMask = PhyicsCategories.switchCategory
-        //keep stationary
-        colorSwitch.physicsBody?.isDynamic = false
-        addChild(colorSwitch)
         
         scoreLabel.fontName = "AvenirNext-Bold"
         scoreLabel.fontSize = 60.0
@@ -44,6 +34,19 @@ class GameScene: SKScene {
         scoreLabel.position = CGPoint(x: frame.midX, y:frame.midY)
         scoreLabel.zPosition = ZPositions.label
         addChild(scoreLabel)
+        
+        colorSwitch = SKSpriteNode(imageNamed: "colorSwitch")
+        colorSwitch.size = CGSize(width: frame.size.width/3, height: frame.size.width/3)
+        colorSwitch.position = CGPoint(x: frame.midX, y: frame.minY + colorSwitch.size.height)
+        colorSwitch.zPosition = ZPositions.colorSwitch
+        //add phyics
+        colorSwitch.physicsBody = SKPhysicsBody(circleOfRadius: colorSwitch.size.width/2)
+        colorSwitch.physicsBody?.categoryBitMask = PhyicsCategories.switchCategory
+        colorSwitch.physicsBody?.contactTestBitMask =  PhyicsCategories.ballCategory
+        //keep stationary
+        colorSwitch.physicsBody?.isDynamic = false
+        addChild(colorSwitch)
+
         spawnBall()
     }
     func updateScoreLabel(){
@@ -70,9 +73,9 @@ class GameScene: SKScene {
         if let newState = SwitchState(rawValue: switchState.rawValue+1){
             switchState = newState
         }else{
-            switchState = .blue
+            switchState = .red
         }
-        colorSwitch.run(SKAction.rotate(byAngle: .pi/2, duration: 0.25))
+        colorSwitch.run(SKAction.rotate(byAngle: .pi/1.5, duration: 0.25))
     }
     func gameOver(){
         UserDefaults.standard.set(score, forKey: "RecentScore")
